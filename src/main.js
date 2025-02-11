@@ -1,7 +1,7 @@
 //https://sonniss.com/gameaudiogdc - audio source
 //Cyra Witten
 //Tempo - Genre: Endless Runner
-//Estimated time - 10 hours
+//Estimated time - 20 hours
 //https://freesound.org/people/Druminfected/sounds/250551/ cc-by 0 - audio source 2
 //Creative Tilt - I liked the creative direction I went with this game, in terms of the music matching the gameplay in a very direct way.
 //Usually, when I make games, or play games, the music is largley tangential to the gameplay, even in endless runners.
