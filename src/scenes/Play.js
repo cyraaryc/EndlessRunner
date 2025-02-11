@@ -13,17 +13,18 @@ class Play extends Phaser.Scene
   
       create ()
       {
+        this.anims.create({
+            key: 'jump',
+            frames: this.anims.generateFrameNumbers('jump', { frames: [ 0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22 ] }),
+            frameRate: 64,
+            repeat: -1
+        });
         this.buffer=5;
         this.enemy;
         this.enemies = [];
         this.controls;
         this.spawnTimer = 1900;
-        this.anims.create({
-            key: 'run',
-            frames: this.anims.generateFrameNumbers('run', { frames: [ 0, 1, 2, 3, 4,5,6,7,8,9,10] }),
-            frameRate: 8,
-            repeat: -1
-        });
+
 
          this.sx = 10;
          this.accel = 0
@@ -45,19 +46,22 @@ class Play extends Phaser.Scene
                 this.controls = new Phaser.Cameras.Controls.FixedKeyControl(controlConfig);
         this.starfield = this.add.tileSprite(0, 0, 272, 160, 'starfield').setOrigin(0, 0).setScale(5)
         this.starfield2 = this.add.tileSprite(0, 0, 272, 160, 'starfield80').setOrigin(0, 0).setScale(5)
-        this.starfield3 = this.add.tileSprite(0, 0, 272, 160, 'starfield60').setOrigin(0, 0).setScale(5)
+        // this.starfield3 = this.add.tileSprite(0, 0, 272, 160, 'starfield60').setOrigin(0, 0).setScale(5)
         this.starfield4 = this.add.tileSprite(0, 0, 272, 160, 'starfield40').setOrigin(0, 0).setScale(5)
-        this.starfield5 = this.add.tileSprite(0, 0, 272, 160, 'starfield20').setOrigin(0, 0).setScale(5)
+        // this.starfield5 = this.add.tileSprite(0, 0, 272, 160, 'starfield20').setOrigin(0, 0).setScale(5)
 
 
 
 
-        this.player = this.physics.add.sprite(100, 100, 'rocket').setCollideWorldBounds(true)
+        this.player = this.physics.add.sprite(50, 56, 'rocket').setCollideWorldBounds(true).setOrigin(0,0)
+        this.player.body.setSize(40, 36)
+        this.player.setScale()
         let menuConfig = {
             fontFamily: 'test',
             fontSize: '23px',
             color: '#FFFFFF',
             align: 'right',
+            backgroundColor: (255,255,255),
             fixedWidth: 0
         }
         this.text = this.add.text(20, 0, 'test',menuConfig).setScrollFactor(0)
@@ -67,8 +71,7 @@ class Play extends Phaser.Scene
 
         this.spawnObject(Phaser.Math.Between(500, 600));  // Call the spawn function
         this.spawnObject(Phaser.Math.Between(500, 1280));  // Call the spawn function
-        this.player.body.setSize(100, 100)
-
+        this.player.play('jump')
       }
   
       update (time, delta)
@@ -147,9 +150,9 @@ class Play extends Phaser.Scene
  
         this.starfield.tilePositionX += (this.sx/50)
         this.starfield2.tilePositionX += this.sx/40
-        this.starfield3.tilePositionX += this.sx/15
+        // this.starfield3.tilePositionX += this.sx/15
         this.starfield4.tilePositionX += this.sx/10
-        this.starfield5.tilePositionX += this.sx/7
+        // this.starfield5.tilePositionX += this.sx/7
         this.distance += this.sx;
         // this.cameras.main.scrollX = (this.sx).toFixed(3);
         this.cursors = this.input.keyboard.createCursorKeys();

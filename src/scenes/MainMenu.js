@@ -10,31 +10,15 @@ class Menu extends Phaser.Scene {
         this.load.audio('sfx-select', './Assets/sfx-select.wav')
 this.load.audio('sfx-explosion', './Assets/sfx-explosion.wav')
 this.load.image('rocket', './Assets/rocket.png')
-        this.load.image('spaceship', './Assets/spaceship-43.png')
-        this.load.image('16', './Assets/16.png')
-        this.load.image('p', './Assets/playership.png')
         this.load.image('ground', './Assets/ground.png');
+        this.load.spritesheet('jump', './Assets/jump.png', { frameWidth: 40, frameHeight: 36 });
 
-
-          this.load.image('spaceship2', './Assets/spaceship2.png')
 this.load.audio('sfx-shot', './Assets/sfx-shot.wav')
-this.load.spritesheet('R', './Assets/Ranimation.png', { frameWidth: 11, frameHeight: 20 });
-// this.load.spritesheet('txt', './Assets/rockettext.png', { frameWidth: 1280, frameHeight: 960 });
 
-        this.load.image('starfield', './Assets/parallax-mountain-bg.png')
-        this.load.image('starfield80', './Assets/parallax-mountain-montain-far.png')
-        this.load.image('starfield60', './Assets/parallax-mountain-mountains.png')
-        this.load.image('starfield40', './Assets/parallax-mountain-trees.png')
-        this.load.image('starfield20', './Assets/parallax-mountain-foreground-trees.png')
-        this.load.spritesheet('run', './Assets/SenseiBoStaffRunning.png', { frameWidth: 24, frameHeight: 24 });
-
-
-        this.load.spritesheet('explosion', './Assets/explosion(1).png', {
-          frameWidth: 64,
-          frameHeight: 32,
-          startFrame: 0,
-          endFrame: 9
-      })
+        this.load.image('starfield', './Assets/bg.png')
+        this.load.image('starfield80', './Assets/pfar.png')
+        this.load.image('starfield40', './Assets/tree.png')
+        this.load.image('starfield20', './Assets/foreground.png')
 
       }
     create() {
@@ -47,7 +31,7 @@ this.load.spritesheet('R', './Assets/Ranimation.png', { frameWidth: 11, frameHei
 
         this.scene.start('playScene')     }, this);
       this.graphics = this.add.graphics();
-      const text = 'RUNNER';
+      const text = 'TEMPO ';
       const startX = 500;
       const startY = 500;
       const fontSize = '50px';
@@ -62,7 +46,7 @@ this.load.spritesheet('R', './Assets/Ranimation.png', { frameWidth: 11, frameHei
         }).setOrigin(0.5);
       });
       
-      const text2 =  'oooooo';
+      const text2 =  'ooooo ';
       text2.split('').forEach((char, index) => {
         this[`l${index + 7}`] = this.add.text(startX + (index * spacing), startY, char, {
           fontSize: fontSize,
