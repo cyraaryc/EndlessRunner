@@ -12,6 +12,7 @@
 //Tinkering with gravity and controls beyond a basic platfomer is something I am proud of, in terms of increasing and decreasing gravity, along with input buffering.
 //https://chatgpt.com/share/6798556f-e6d4-8000-8696-8116c43f9f5b bc im lazy and didnt want to write for loops myself. Used already in Rocket Patrol mods and I copied from myself.
 //Boxy-Bold ttf is an open source font. Didnt cite in game bc I doubt anyone else even cited the fontd they used. CC-0.
+//https://chatgpt.com/share/67ab062b-3d18-8000-998d-2f5770753263 - basic group stuff 
 let config = {
     type: Phaser.AUTO,
     width: 1340,
