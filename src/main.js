@@ -10,6 +10,8 @@
 //The rhythm heaven games greatly inspired me, and I felt I was able to capture some of the vibes of those games in an endless runner form. 
 //On the technical side, I learned alot about basic platformer movement, gravity, and input buffering, all of which contributed to my final game.
 //Tinkering with gravity and controls beyond a basic platfomer is something I am proud of, in terms of increasing and decreasing gravity, along with input buffering.
+//https://chatgpt.com/share/6798556f-e6d4-8000-8696-8116c43f9f5b bc im lazy and didnt want to write for loops myself. Used already in Rocket Patrol mods and I copied from myself.
+//Boxy-Bold ttf is an open source font. Didnt cite in game bc I doubt anyone else even cited the fontd they used. CC-0.
 let config = {
     type: Phaser.AUTO,
     width: 1340,
