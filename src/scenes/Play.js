@@ -128,15 +128,22 @@ class Play extends Phaser.Scene
                 powerup.destroy()
             }
           });
-        if (this.spawnTimer >= 1000) {  // Spawn an object every 3 seconds (3000 ms)
-            this.spawnObject(Phaser.Math.Between(1880, 1280*2));  // Call the spawn function
-            this.spawnObject(Phaser.Math.Between(1500, 1700));  // Call the spawn function
-            this.spawnPower(Phaser.Math.Between(1500, 1700),Phaser.Math.Between(100, 400));  // Call the spawn function
-
+if(3000 - this.sx*70 > 50){
+        if (this.spawnTimer >= 3000 - this.sx*70) { 
+            this.spawnObject(Phaser.Math.Between(1880, 1280*2));  
+            this.spawnObject(Phaser.Math.Between(1500, 1700));  
+            this.spawnPower(Phaser.Math.Between(1500, 1700),Phaser.Math.Between(100, 400)); 
             this.m.rate += this.sx/1000
-// Call the spawn function
-            this.spawnTimer = 0;  // Reset the timer
+            this.spawnTimer = 0;  
           }
+        } else if (this.spawnTimer >= 100){
+          this.spawnObject(Phaser.Math.Between(1880, 1280*2));  
+          this.spawnObject(Phaser.Math.Between(1500, 1700));  
+          this.spawnPower(Phaser.Math.Between(1500, 1700),Phaser.Math.Between(100, 400)); 
+          this.m.rate += this.sx/1000
+          this.spawnTimer = 0;  
+        }
+
           this.spawnTimer += delta;
           
         if(this.player.body.blocked.down){
