@@ -128,7 +128,7 @@ class Play extends Phaser.Scene
                 powerup.destroy()
             }
           });
-        if (this.spawnTimer >= 3000 - this.sx*70) {  // Spawn an object every 3 seconds (3000 ms)
+        if (this.spawnTimer >= 3000) {  // Spawn an object every 3 seconds (3000 ms)
             this.spawnObject(Phaser.Math.Between(1880, 1280*2));  // Call the spawn function
             this.spawnObject(Phaser.Math.Between(1500, 1700));  // Call the spawn function
             this.spawnPower(Phaser.Math.Between(1500, 1700),Phaser.Math.Between(100, 400));  // Call the spawn function
