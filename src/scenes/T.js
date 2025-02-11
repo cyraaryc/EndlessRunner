@@ -7,10 +7,6 @@ class T extends Phaser.Scene {
     }
     create() {
       const go = this.input.keyboard.on('keydown', function (event) {
-        game.settings = {
-          spaceshipSpeed: 3,
-          gameTimer: 20000    
-        }
         this.sound.play('sfx-select')
 
         this.scene.start('playScene')     }, this);
