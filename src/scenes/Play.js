@@ -8,20 +8,35 @@ class Play extends Phaser.Scene
       preload ()
       {
 
-          this.load.image('walls_1x2', './Assets/tile64.png');
       }
   
       create ()
       {
+        this.loop;
+        if (this.loop != 0){
+        this.m = this.sound.add('m', { volume: 0.5, loop: true});
+        this.m.play();
+        this.loop=0
+        }
+        this.m.rate = 1;
+
+        this.timer=0;
         this.anims.create({
             key: 'jump',
             frames: this.anims.generateFrameNumbers('jump', { frames: [ 0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22 ] }),
             frameRate: 64,
             repeat: -1
         });
+        this.anims.create({
+            frames: this.anims.generateFrameNumbers('powerup', { frames: [ 0,1,2,3,4,5,6,7] }),
+            key: 'powerup',
+            frameRate: 8,
+            repeat: -1
+        });
         this.buffer=5;
         this.enemy;
         this.enemies = [];
+        this.powerups = [];
         this.controls;
         this.spawnTimer = 1900;
 
@@ -49,6 +64,7 @@ class Play extends Phaser.Scene
         // this.starfield3 = this.add.tileSprite(0, 0, 272, 160, 'starfield60').setOrigin(0, 0).setScale(5)
         this.starfield4 = this.add.tileSprite(0, 0, 272, 160, 'starfield40').setOrigin(0, 0).setScale(5)
         // this.starfield5 = this.add.tileSprite(0, 0, 272, 160, 'starfield20').setOrigin(0, 0).setScale(5)
+        this.add.rectangle(0, 0, 3000, 200, 0x000000);
 
 
 
@@ -64,9 +80,10 @@ class Play extends Phaser.Scene
             backgroundColor: (255,255,255),
             fixedWidth: 0
         }
-        this.text = this.add.text(20, 0, 'test',menuConfig).setScrollFactor(0)
-        this.text2 = this.add.text(20, 50, 'test',menuConfig).setScrollFactor(0)
-        this.text3 = this.add.text(20, 100, 'test',menuConfig).setScrollFactor(0)
+        this.text = this.add.text(500, 20, 'test',menuConfig).setScrollFactor(0).setScale(2)
+
+        // this.text2 = this.add.text(20, 50, 'test',menuConfig).setScrollFactor(0)
+        // this.text3 = this.add.text(20, 100, 'test',menuConfig).setScrollFactor(0)
         // this.player.body.setImmovable(true)
 
         this.spawnObject(Phaser.Math.Between(500, 600));  // Call the spawn function
@@ -76,10 +93,13 @@ class Play extends Phaser.Scene
   
       update (time, delta)
       {
+        
 
-
+        this.timer++
         this.player.x = 500
-        if (this.player.y >  740){        this.scene.start('playScene')        }
+        if (this.player.y >  740){
+            this.sound.play('c4')
+            this.scene.start('playScene')        }
 
         this.enemies.forEach(enemy => {
             enemy.setVelocityX((-this.sx)*60) // Decrease X velocity over time
@@ -92,15 +112,24 @@ class Play extends Phaser.Scene
                 enemy.destroy()
             }
           });
+          this.powerups.forEach(powerup => {
+            powerup.setVelocityX((-this.sx)*60) // Decrease X velocity over time
 
+            if (powerup.x < -300) {
+                const index = this.powerups.indexOf(powerup);
+                if (index > -1) {
+                    this.powerups.splice(index, 1);  
+                }
+                powerup.destroy()
+            }
+          });
         if (this.spawnTimer >= 3000 - this.sx*70) {  // Spawn an object every 3 seconds (3000 ms)
             this.spawnObject(Phaser.Math.Between(1880, 1280*2));  // Call the spawn function
             this.spawnObject(Phaser.Math.Between(1500, 1700));  // Call the spawn function
+            this.spawnPower(Phaser.Math.Between(1500, 1700),Phaser.Math.Between(100, 400));  // Call the spawn function
 
+            this.m.rate += this.sx/1000
 // Call the spawn function
-
-  
-
             this.spawnTimer = 0;  // Reset the timer
           }
           this.spawnTimer += delta;
@@ -124,6 +153,8 @@ class Play extends Phaser.Scene
         }
         if (game.input.activePointer.isDown && this.player.body.blocked.down) {
             this.jumptimer += 1; 
+            this.sound.play('c2')
+
         }
         if ((game.input.activePointer.isDown || this.buffer>=0) && this.jumptimer > 0) {
             this.jumptimer+= delta;
@@ -135,18 +166,13 @@ class Play extends Phaser.Scene
 
         }
         // if(game.input.activePointer.upElement) {console.log("up")}
-        this.text.setText(`Speed: ${this.sx.toFixed(2)}`);
-        this.text2.setText(`Distance: ${this.distance.toFixed(2)}px`);
-        this.text3.setText(`Time: ${(time/1000).toFixed(2)}`);
+        this.text.setText(`BPM: ${(98+(this.sx/5)).toFixed(2)}`);
+        // this.text3.setText(`Time: ${(this.timer/60).toFixed(2)}`);
 
     
         //   this.controls.update(delta);
         //  Any speed as long as 16 evenly divides by it
         this.sx += .005 
-        if (this.sx >= 500)
-            {
-                this.sx=500
-            }
  
         this.starfield.tilePositionX += (this.sx/50)
         this.starfield2.tilePositionX += this.sx/40
@@ -169,15 +195,37 @@ class Play extends Phaser.Scene
         this.enemies.push(enemy);
         this.physics.add.collider(this.player, enemy, this.hitEnemy, null, this);
 
-      }    
+      }   
+      spawnPower(xpos,ypos) {
+
+        const powerup = this.physics.add.sprite(xpos, ypos, 'powerup')  
+        powerup.setVelocityX(-100);  
+        powerup.body.setAllowGravity(false).setImmovable(true).setFriction(0)
+        this.powerups.push(powerup);
+        powerup.body.setSize(32,32)
+        powerup.play('powerup')
+        this.physics.add.collider(this.player, powerup, this.hitpower, null, this);
+
+
+
+      }  
       na(){}
       hitEnemy(player, enemy) {
         if (this.player.y + this.player.height >= enemy.y) {
+        this.timer = 0;
+        this.sound.play('c4')
+        console.log('hit');
+        this.bestbpm = (100+(this.sx/5)).toFixed(2)
         this.scene.start('playScene')
 
-        console.log('Player hit the enemy!');
         // const index = this.enemies.indexOf(enemy);
         }
+
+      }
+      hitpower(player, powerup) {
+        this.sx = this.sx + 4;
+        this.sound.play('c3')
+        powerup.y = -100;
 
       }
 

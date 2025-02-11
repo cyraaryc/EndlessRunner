@@ -7,13 +7,17 @@ class Menu extends Phaser.Scene {
     }
     preload() {
         // load images/tile sprites
-        this.load.audio('sfx-select', './Assets/sfx-select.wav')
-this.load.audio('sfx-explosion', './Assets/sfx-explosion.wav')
+
 this.load.image('rocket', './Assets/rocket.png')
         this.load.image('ground', './Assets/ground.png');
         this.load.spritesheet('jump', './Assets/jump.png', { frameWidth: 40, frameHeight: 36 });
+        this.load.spritesheet('powerup', './Assets/powerup.png', { frameWidth: 32, frameHeight: 32 });
+        this.load.audio('m', './Assets/m.wav')
+        this.load.audio('sfx-select', './Assets/click.wav')
+        this.load.audio('c2', './Assets/click2.wav')
+        this.load.audio('c3', './Assets/click3.wav')
+        this.load.audio('c4', './Assets/click4.wav')
 
-this.load.audio('sfx-shot', './Assets/sfx-shot.wav')
 
         this.load.image('starfield', './Assets/bg.png')
         this.load.image('starfield80', './Assets/pfar.png')
@@ -29,7 +33,7 @@ this.load.audio('sfx-shot', './Assets/sfx-shot.wav')
         }
         this.sound.play('sfx-select')
 
-        this.scene.start('playScene')     }, this);
+        this.scene.start('t')     }, this);
       this.graphics = this.add.graphics();
       const text = 'TEMPO ';
       const startX = 500;
@@ -158,35 +162,7 @@ for (let i = 1; i <= 34; i++) {
   this[`l${i}`].y = this[`ball${i}`].y;
 }
 
-  
-
-  
-  // this.Olet.y = this.ball2.y;
-  // this.Klet.y = this.ball3.y;
+}
 
 
-
-  // this.path.getPoint(this.follower.t, this.follower.vec);
-  // this.graphics.fillRect(this.follower.vec.x - 8, this.follower.vec.y - 8, 16, 16);
-
-    if (Phaser.Input.Keyboard.JustDown(keyLEFT)) {
-      // easy mode
-      game.settings = {
-        spaceshipSpeed: 3,
-        gameTimer: 10000    
-      }
-      this.sound.play('sfx-select')
-      this.scene.start('playScene')    
-    }
-    if (Phaser.Input.Keyboard.JustDown(keyRIGHT)) {
-      // hard mode
-      game.settings = {
-        spaceshipSpeed: 4,
-        gameTimer: 10000    
-      }
-      this.sound.play('sfx-select')
-      this.scene.start('playScene')    
-    }
-
-  }
 }
