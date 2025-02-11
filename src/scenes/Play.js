@@ -12,6 +12,7 @@ class Play extends Phaser.Scene
   
       create ()
       {
+        this.KeyM = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.M)
         this.loop;
         if (this.loop != 0){
         this.m = this.sound.add('m', { volume: 0.5, loop: true});
@@ -93,7 +94,11 @@ class Play extends Phaser.Scene
   
       update (time, delta)
       {
-        
+        if (Phaser.Input.Keyboard.JustDown(this.KeyM)) {
+          this.m.stop()
+          this.loop = 10;
+          this.scene.start('Menuscene')    
+        }
 
         this.timer++
         this.player.x = 500
